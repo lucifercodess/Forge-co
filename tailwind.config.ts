@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       colors: {
         void: "#050508",
-        accent: "#00ffc8",
-        "accent-dim": "#00cc9e",
+        accent: "#e4e4e7",
+        "accent-dim": "#a1a1aa",
       },
       fontFamily: {
         display: ["var(--font-display)", "system-ui", "sans-serif"],

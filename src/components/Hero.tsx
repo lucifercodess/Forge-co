@@ -22,7 +22,7 @@ export default function Hero() {
           Forge & Co
         </motion.p>
         <motion.p
-          className="font-mono text-accent text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4"
+          className="font-mono text-white/80 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -37,9 +37,9 @@ export default function Hero() {
         >
           We build
           <br />
-          <span className="text-accent">websites</span>
-          <span className="text-white/90">&</span>
-          <span className="text-accent">apps</span>
+          <span className="text-white">websites</span>
+          <span className="text-white/80">&</span>
+          <span className="text-white">apps</span>
         </motion.h1>
         <motion.p
           className="font-sans text-zinc-400 text-sm sm:text-base md:text-lg lg:text-xl mt-5 sm:mt-8 max-w-xl mx-auto px-1"
@@ -57,7 +57,7 @@ export default function Hero() {
         >
           <motion.a
             href="#work"
-            className="w-full sm:w-auto min-h-[44px] flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-accent text-void font-semibold rounded-full text-base sm:text-lg hover:bg-accent-dim transition-colors"
+            className="w-full sm:w-auto min-h-[44px] flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 bg-white text-void font-semibold rounded-full text-base sm:text-lg hover:bg-zinc-200 transition-colors"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -65,7 +65,7 @@ export default function Hero() {
           </motion.a>
           <motion.a
             href="#contact"
-            className="w-full sm:w-auto min-h-[44px] flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-accent/60 text-accent font-semibold rounded-full text-base sm:text-lg hover:bg-accent/10 transition-colors"
+            className="w-full sm:w-auto min-h-[44px] flex items-center justify-center px-6 sm:px-8 py-3.5 sm:py-4 border-2 border-white/40 text-white font-semibold rounded-full text-base sm:text-lg hover:bg-white/10 transition-colors"
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
           >
@@ -86,7 +86,7 @@ export default function Hero() {
           animate={{ y: [0, 5, 0] }}
           transition={{ repeat: Infinity, duration: 1.5, ease: "easeInOut" }}
         >
-          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-accent" />
+          <div className="w-1 h-1 sm:w-1.5 sm:h-1.5 rounded-full bg-white/80" />
         </motion.div>
       </motion.div>
     </section>

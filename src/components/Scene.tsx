@@ -2,82 +2,19 @@
 
 import { useRef, useMemo, Suspense } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
-import { Float } from "@react-three/drei";
 import * as THREE from "three";
 
-function Grid() {
-  const groupRef = useRef<THREE.Group>(null);
-  const count = 20;
-  const positions = useMemo(() => {
-    const pos: [number, number, number][] = [];
-    for (let i = -count / 2; i < count / 2; i++) {
-      for (let j = -count / 2; j < count / 2; j++) {
-        pos.push([i * 1.5, j * 1.5, -12 - Math.random() * 8]);
-      }
-    }
-    return pos;
-  }, []);
+const WHITE = "#e4e4e7";
 
-  useFrame((state) => {
-    if (!groupRef.current) return;
-    groupRef.current.rotation.z = state.clock.elapsedTime * 0.015;
-  });
-
-  return (
-    <group ref={groupRef}>
-      {positions.map((pos, i) => (
-        <mesh key={i} position={pos}>
-          <boxGeometry args={[0.35, 0.35, 0.35]} />
-          <meshBasicMaterial color="#00ffc8" transparent opacity={0.12} />
-        </mesh>
-      ))}
-    </group>
-  );
-}
-
-function Orb() {
-  return (
-    <Float speed={2} floatIntensity={0.35} rotationIntensity={0.15}>
-      <mesh>
-        <icosahedronGeometry args={[1.8, 1]} />
-        <meshStandardMaterial
-          color="#00ffc8"
-          emissive="#00ffc8"
-          emissiveIntensity={0.4}
-          wireframe={false}
-          transparent
-          opacity={0.85}
-        />
-      </mesh>
-    </Float>
-  );
-}
-
-function TorusRing() {
-  const ref = useRef<THREE.Mesh>(null);
-  useFrame((state) => {
-    if (!ref.current) return;
-    ref.current.rotation.x = state.clock.elapsedTime * 0.1;
-    ref.current.rotation.y = state.clock.elapsedTime * 0.15;
-  });
-  return (
-    <Float speed={1.5} floatIntensity={0.5} rotationIntensity={0.2}>
-      <mesh ref={ref} position={[2.5, 1, -3]}>
-        <torusGeometry args={[1.2, 0.08, 16, 48]} />
-        <meshBasicMaterial color="#00ffc8" transparent opacity={0.5} />
-      </mesh>
-    </Float>
-  );
-}
-
-function Particles() {
-  const count = 80;
+// Distant starfield – many small points far back
+function Starfield() {
+  const count = 400;
   const positions = useMemo(() => {
     const pos = new Float32Array(count * 3);
     for (let i = 0; i < count; i++) {
-      pos[i * 3] = (Math.random() - 0.5) * 40;
-      pos[i * 3 + 1] = (Math.random() - 0.5) * 40;
-      pos[i * 3 + 2] = (Math.random() - 0.5) * 30;
+      pos[i * 3] = (Math.random() - 0.5) * 60;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 60;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 40 - 25;
     }
     return pos;
   }, []);
@@ -85,14 +22,163 @@ function Particles() {
   return (
     <points>
       <bufferGeometry>
-        <bufferAttribute
-          attach="attributes-position"
-          count={count}
-          array={positions}
-          itemSize={3}
-        />
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
       </bufferGeometry>
-      <pointsMaterial size={0.08} color="#00ffc8" transparent opacity={0.6} sizeAttenuation />
+      <pointsMaterial
+        color={WHITE}
+        size={0.18}
+        transparent
+        opacity={0.85}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </points>
+  );
+}
+
+// Brighter “near” stars – slower parallax
+function NearStars() {
+  const ref = useRef<THREE.Points>(null);
+  const count = 80;
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 50;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 50;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 30 - 15;
+    }
+    return pos;
+  }, []);
+
+  useFrame((state) => {
+    if (!ref.current) return;
+    ref.current.rotation.y = state.clock.elapsedTime * 0.012;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial
+        color={WHITE}
+        size={0.25}
+        transparent
+        opacity={0.7}
+        sizeAttenuation
+        depthWrite={false}
+      />
+    </points>
+  );
+}
+
+// Single asteroid – irregular shape, drifts through space
+function Asteroid({
+  position,
+  scale: s,
+  speed,
+  drift,
+}: {
+  position: [number, number, number];
+  scale: number;
+  speed: number;
+  drift: [number, number, number];
+}) {
+  const ref = useRef<THREE.Mesh>(null);
+  const pos = useRef({ x: position[0], y: position[1], z: position[2] });
+
+  useFrame((state, delta) => {
+    if (!ref.current) return;
+    const t = state.clock.elapsedTime * speed;
+    ref.current.rotation.x = t * 0.2;
+    ref.current.rotation.y = t * 0.25;
+    pos.current.x += drift[0] * delta;
+    pos.current.y += drift[1] * delta;
+    pos.current.z += drift[2] * delta;
+    // Wrap around when far out
+    if (pos.current.z < -25) pos.current.z += 35;
+    if (pos.current.z > 15) pos.current.z -= 35;
+    if (pos.current.x < -30) pos.current.x += 50;
+    if (pos.current.x > 30) pos.current.x -= 50;
+    ref.current.position.set(pos.current.x, pos.current.y, pos.current.z);
+  });
+
+  return (
+    <mesh ref={ref} position={position}>
+      <dodecahedronGeometry args={[s, 0]} />
+      <meshStandardMaterial
+        color="#6b7280"
+        emissive="#374151"
+        roughness={0.9}
+        metalness={0.1}
+      />
+    </mesh>
+  );
+}
+
+// Asteroids moving through the scene
+function Asteroids() {
+  const asteroids = useMemo(
+    () =>
+      Array.from({ length: 12 }, () => ({
+        position: [
+          (Math.random() - 0.5) * 24,
+          (Math.random() - 0.5) * 14,
+          (Math.random() - 0.5) * 25 - 8,
+        ] as [number, number, number],
+        scale: Math.random() * 0.22 + 0.08,
+        speed: Math.random() * 0.2 + 0.1,
+        drift: [
+          (Math.random() - 0.5) * 0.5,
+          (Math.random() - 0.5) * 0.3,
+          -(Math.random() * 1.5 + 0.8),
+        ] as [number, number, number],
+      })),
+    []
+  );
+
+  return (
+    <>
+      {asteroids.map((a, i) => (
+        <Asteroid key={i} position={a.position} scale={a.scale} speed={a.speed} drift={a.drift} />
+      ))}
+    </>
+  );
+}
+
+// Subtle twinkle on starfield
+function TwinkleStars() {
+  const ref = useRef<THREE.Points>(null);
+  const count = 120;
+  const positions = useMemo(() => {
+    const pos = new Float32Array(count * 3);
+    for (let i = 0; i < count; i++) {
+      pos[i * 3] = (Math.random() - 0.5) * 55;
+      pos[i * 3 + 1] = (Math.random() - 0.5) * 55;
+      pos[i * 3 + 2] = (Math.random() - 0.5) * 35 - 20;
+    }
+    return pos;
+  }, []);
+
+  useFrame((state) => {
+    if (!ref.current?.material) return;
+    const m = ref.current.material as THREE.PointsMaterial;
+    m.opacity = 0.4 + Math.sin(state.clock.elapsedTime * 2) * 0.15;
+  });
+
+  return (
+    <points ref={ref}>
+      <bufferGeometry>
+        <bufferAttribute attach="attributes-position" count={count} array={positions} itemSize={3} />
+      </bufferGeometry>
+      <pointsMaterial
+        color={WHITE}
+        size={0.2}
+        transparent
+        opacity={0.5}
+        sizeAttenuation
+        depthWrite={false}
+      />
     </points>
   );
 }
@@ -102,12 +188,11 @@ function SceneInner() {
     <>
       <color attach="background" args={["#050508"]} />
       <ambientLight intensity={0.3} />
-      <pointLight position={[10, 10, 10]} intensity={1} color="#00ffc8" />
-      <pointLight position={[-10, -10, 5]} intensity={0.5} color="#00ffc8" />
-      <Grid />
-      <Orb />
-      <TorusRing />
-      <Particles />
+      <pointLight position={[0, 0, 10]} intensity={0.6} color="#ffffff" />
+      <Starfield />
+      <NearStars />
+      <TwinkleStars />
+      <Asteroids />
     </>
   );
 }
@@ -117,7 +202,7 @@ export default function Scene() {
     <div className="absolute inset-0 z-0 bg-[#050508]">
       <Suspense fallback={null}>
         <Canvas
-          camera={{ position: [0, 0, 8], fov: 55 }}
+          camera={{ position: [0, 0, 8], fov: 50 }}
           dpr={[1, 1.5]}
           gl={{
             alpha: true,
