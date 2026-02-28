@@ -7,9 +7,9 @@ const Scene = dynamic(() => import("./Scene"), { ssr: false });
 
 export default function Hero() {
   return (
-    <section className="relative min-h-screen min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#050508] pt-16 sm:pt-0">
+    <section className="relative min-h-screen min-h-[100dvh] flex flex-col items-center justify-center overflow-hidden bg-[#0f0f14] pt-16 sm:pt-0">
       {/* Fallback gradient so content is never on white */}
-      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#050508] via-[#050508] to-[#0a0a0f]" aria-hidden />
+      <div className="absolute inset-0 z-0 bg-gradient-to-b from-[#0f0f14] via-[#0f0f14] to-[#14141c]" aria-hidden />
       <Scene />
 
       <div className="relative z-10 text-center px-4 sm:px-6 max-w-5xl mx-auto w-full">
@@ -19,7 +19,7 @@ export default function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.1 }}
         >
-          Forge & Co
+          Pixshel
         </motion.p>
         <motion.p
           className="font-mono text-white/80 text-xs sm:text-sm md:text-base tracking-[0.2em] sm:tracking-[0.3em] uppercase mb-3 sm:mb-4"

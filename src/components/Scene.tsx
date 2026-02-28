@@ -186,7 +186,7 @@ function TwinkleStars() {
 function SceneInner() {
   return (
     <>
-      <color attach="background" args={["#050508"]} />
+      <color attach="background" args={["#0f0f14"]} />
       <ambientLight intensity={0.3} />
       <pointLight position={[0, 0, 10]} intensity={0.6} color="#ffffff" />
       <Starfield />
@@ -199,7 +199,7 @@ function SceneInner() {
 
 export default function Scene() {
   return (
-    <div className="absolute inset-0 z-0 bg-[#050508]">
+    <div className="absolute inset-0 z-0 bg-[#0f0f14]">
       <Suspense fallback={null}>
         <Canvas
           camera={{ position: [0, 0, 8], fov: 50 }}

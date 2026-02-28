@@ -15,8 +15,8 @@ const jetbrains = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Forge & Co — We build websites & apps",
-  description: "Web and app development. We ship. Forge & Co.",
+  title: "Pixshel — We build websites & apps",
+  description: "Web and app development. We ship. Pixshel.",
 };
 
 export const viewport = {
@@ -32,7 +32,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${spaceGrotesk.variable} ${jetbrains.variable}`}>
-      <body className="font-sans antialiased min-h-screen overflow-x-hidden bg-[#050508] text-zinc-200">
+      <body className="font-sans antialiased min-h-screen overflow-x-hidden bg-[#0f0f14] text-zinc-200">
         {children}
       </body>
     </html>

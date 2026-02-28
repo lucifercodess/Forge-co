@@ -27,7 +27,7 @@ const testimonials = [
 
 export default function Testimonials() {
   return (
-    <section id="testimonials" className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050508] overflow-hidden scroll-mt-20">
+    <section id="testimonials" className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#0f0f14] overflow-hidden scroll-mt-20">
       <div className="max-w-6xl mx-auto">
         <motion.h2
           className="font-display font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-white mb-3 sm:mb-4"

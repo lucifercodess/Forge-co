@@ -14,14 +14,14 @@ export default function Nav() {
 
   return (
     <header className="sticky top-0 left-0 right-0 z-50 safe-area-inset-top">
-      <nav className="px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between bg-[#050508]/95 backdrop-blur-md border-b border-white/5">
+      <nav className="px-4 sm:px-6 py-4 sm:py-5 flex items-center justify-between bg-[#0f0f14]/95 backdrop-blur-md border-b border-white/5">
         <motion.span
           className="font-display font-bold text-white text-base sm:text-lg tracking-tight"
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, delay: 0.3 }}
         >
-          Forge & Co
+          Pixshel
         </motion.span>
 
         {/* Desktop: inline links */}
@@ -65,7 +65,7 @@ export default function Nav() {
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
             transition={{ duration: 0.25, ease: "easeInOut" }}
-            className="md:hidden overflow-hidden bg-[#050508] border-b border-white/10"
+            className="md:hidden overflow-hidden bg-[#0f0f14] border-b border-white/10"
           >
             <div className="flex flex-col items-stretch py-4 gap-0">
               {links.map((link, i) => (

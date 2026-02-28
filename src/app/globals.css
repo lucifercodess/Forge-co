@@ -3,18 +3,18 @@
 @tailwind utilities;
 
 :root {
-  --void: #050508;
+  --void: #0f0f14;
   --accent: #e4e4e7;
   --accent-dim: #a1a1aa;
 }
 
 html {
   scroll-behavior: smooth;
-  background: #050508;
+  background: #0f0f14;
 }
 
 body {
-  background: #050508 !important;
+  background: #0f0f14 !important;
   color: #e4e4e7;
   min-height: 100vh;
 }

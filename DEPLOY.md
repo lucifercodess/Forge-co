@@ -1,4 +1,4 @@
-# Deploy Forge & Co to Vercel
+# Deploy Pixshel to Vercel
 
 ## Option A: Deploy with Vercel (GitHub)
 
@@ -6,7 +6,7 @@
    ```bash
    git init
    git add .
-   git commit -m "Forge & Co showcase site"
+   git commit -m "Pixshel showcase site"
    git branch -M main
    git remote add origin https://github.com/YOUR_USERNAME/YOUR_REPO.git
    git push -u origin main
@@ -44,4 +44,4 @@
    - Confirm and wait for deploy
 
 4. **Production URL:**  
-   Use the URL Vercel prints (e.g. `forge-co-xxx.vercel.app`). Add a custom domain later in the Vercel dashboard under **Settings → Domains**.
+   Use the URL Vercel prints (e.g. `pixshel-xxx.vercel.app`). Add a custom domain later in the Vercel dashboard under **Settings → Domains**.

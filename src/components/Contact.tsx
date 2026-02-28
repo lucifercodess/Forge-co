@@ -2,12 +2,12 @@
 
 import { motion } from "framer-motion";
 
-const EMAIL = "shelly.saintern@gmail.com";
+const EMAIL = "Shelly.work07@gmail.com";
 const PHONE = "9501350517";
 
 export default function Contact() {
   return (
-    <section id="contact" className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#050508] safe-area-inset-bottom scroll-mt-20">
+    <section id="contact" className="relative py-16 sm:py-24 md:py-32 px-4 sm:px-6 bg-[#0f0f14] safe-area-inset-bottom scroll-mt-20">
       <div className="max-w-3xl mx-auto text-center">
         <motion.h2
           className="font-display font-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-7xl text-white mb-4 sm:mb-6"
